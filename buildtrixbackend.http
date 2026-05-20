@@ -1,0 +1,6 @@
+@buildtrixbackend_HostAddress = http://localhost:5189
+
+GET {{buildtrixbackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
