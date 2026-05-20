@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("buildtrixbackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4388f5ca8ba2455eddd6375d5d881d67e6898e68")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d191f1747718ab1229e7626f85b81ca89f1ddd19")]
 [assembly: System.Reflection.AssemblyProductAttribute("buildtrixbackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("buildtrixbackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
