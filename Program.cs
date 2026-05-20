@@ -7,19 +7,21 @@ using TaskFlowAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// ---------------- CONTROLLERS ----------------
 builder.Services.AddControllers();
 
+// ---------------- SWAGGER ----------------
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "buildtrixbackend",
+        Title = "TaskFlow API",
         Version = "v1"
     });
 
+    // JWT AUTH in Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -27,7 +29,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter JWT Token like this: Bearer your_token"
+        Description = "Enter: Bearer YOUR_TOKEN"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -41,15 +43,15 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            Array.Empty<string>()
+            new string[] {}
         }
     });
 });
 
+// ---------------- DATABASE ----------------
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionString =
-        builder.Configuration.GetConnectionString("DefaultConnection");
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     options.UseMySql(
         connectionString,
@@ -57,6 +59,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     );
 });
 
+// ---------------- CORS ----------------
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -68,6 +71,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+// ---------------- JWT AUTH ----------------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -82,34 +86,34 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Audience"],
 
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(
-                    builder.Configuration["Jwt:Key"]!
-                )
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
             )
         };
     });
 
-// Authorization
 builder.Services.AddAuthorization();
 
-
-
+// ---------------- BUILD APP ----------------
 var app = builder.Build();
 
+// ---------------- IMPORTANT FIX ----------------
+// Swagger MUST run in production too (Render)
+app.UseSwagger();
+app.UseSwaggerUI();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// ---------------- PIPELINE ----------------
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
+// REMOVE HTTPS REDIRECT (IMPORTANT FOR RENDER DOCKER)
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// FORCE PORT BINDING FOR RENDER
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
