@@ -12,6 +12,7 @@ namespace TaskFlowAPI.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private static readonly string[] AllowedStatuses = new[] { "pending", "in progress", "completed" };
 
     public TasksController(AppDbContext context)
     {
@@ -21,9 +22,13 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask(TaskItem task)
     {
-        if (string.IsNullOrWhiteSpace(task.Title))
-            return BadRequest(new { message = "Title is required" });
+        if (!ModelState.IsValid)
+            return BadRequest(new { message = "Task data is invalid.", errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
 
+        if (!AllowedStatuses.Contains(task.Status.Trim(), StringComparer.OrdinalIgnoreCase))
+            return BadRequest(new { message = "Invalid task status. Allowed values are: pending, in progress, completed." });
+
+        task.Status = task.Status.Trim().ToLowerInvariant();
         task.CreatedAt = DateTime.UtcNow;
         task.UpdatedAt = DateTime.UtcNow;
 
@@ -80,6 +85,12 @@ public class TasksController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTask(int id, TaskItem updatedTask)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(new { message = "Task data is invalid.", errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+
+        if (!AllowedStatuses.Contains(updatedTask.Status.Trim(), StringComparer.OrdinalIgnoreCase))
+            return BadRequest(new { message = "Invalid task status. Allowed values are: pending, in progress, completed." });
+
         var task = await _context.Tasks.FindAsync(id);
 
         if (task == null)
@@ -87,7 +98,7 @@ public class TasksController : ControllerBase
 
         task.Title = updatedTask.Title;
         task.Description = updatedTask.Description;
-        task.Status = updatedTask.Status;
+        task.Status = updatedTask.Status.Trim().ToLowerInvariant();
         task.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
