@@ -3052,11 +3052,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Desktop\\buildtrixbackend\\buildtrixbackend.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Documents\\TaskApi\\buildtrixbackend.csproj",
       "projectName": "buildtrixbackend",
-      "projectPath": "C:\\Users\\USER\\Desktop\\buildtrixbackend\\buildtrixbackend.csproj",
+      "projectPath": "C:\\Users\\USER\\Documents\\TaskApi\\buildtrixbackend.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Desktop\\buildtrixbackend\\obj\\",
+      "outputPath": "C:\\Users\\USER\\Documents\\TaskApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
