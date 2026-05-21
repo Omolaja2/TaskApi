@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8jE7aAc4ik4=",
+  "dgSpecHash": "1Hf43MZAdBc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\Desktop\\buildtrixbackend\\buildtrixbackend.csproj",
+  "projectFilePath": "C:\\Users\\USER\\Documents\\TaskApi\\buildtrixbackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
