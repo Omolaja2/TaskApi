@@ -1,0 +1,41 @@
+# .NET build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider files
+.idea/
+*.sln.iml
+
+# Visual Studio Code files
+.vscode/
+
+# ASP.NET Core secrets and local settings
+appsettings*.json
+secrets.json
+
+# Logs
+*.log
+
+# Generated files
+*.dbmdl
+*.bak
+
+# Docker
+docker-compose.override.yml
+
+# Publish output
+publish/
+
+# Resharper
+_ReSharper*/
+*.ReSharper*
+
+# OS generated
+.DS_Store
+Thumbs.db
